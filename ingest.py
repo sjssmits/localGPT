@@ -2,7 +2,7 @@ import os
 import click
 from typing import List
 from utils import xlxs_to_csv
-from langchain.document_loaders import TextLoader, PDFMinerLoader, CSVLoader
+from langchain.document_loaders import TextLoader, PDFMinerLoader, CSVLoader, UnstructuredWordDocumentLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import Chroma
 from langchain.docstore.document import Document
@@ -18,6 +18,10 @@ def load_single_document(file_path: str) -> Document:
         loader = PDFMinerLoader(file_path)
     elif file_path.endswith(".csv"):
         loader = CSVLoader(file_path)
+    elif file_path.endswith(".doc"):
+        loader = UnstructuredWordDocumentLoader(file_path)
+    elif file_path.endswith(".docx"):
+        loader = UnstructuredWordDocumentLoader(file_path)
     return loader.load()[0]
 
 
